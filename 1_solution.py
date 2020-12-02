@@ -3,7 +3,7 @@ from itertools import combinations
 
 
 def list_that_sums_to(expenses, length, value):
-  return filter(lambda combo: sum(combo) == value, combinations(expenses, length))[0]
+  return next(c for c in combinations(expenses, length) if sum(c) == value)
 
 
 def product(values):

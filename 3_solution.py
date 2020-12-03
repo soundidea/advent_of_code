@@ -2,7 +2,7 @@ from functools import partial
 
 
 def trees_for_slope(g, (dx,dy)):
-  return sum(1 for (x,y) in map(lambda y: ((dx * y / dy) % len(g[0]), y), range(0, len(g), dy)) if g[y][x] == '#')
+  return sum(1 for y in range(0, len(g), dy) if g[y][(dx * y / dy) % len(g[0])] == '#')
 
 
 def product(seq):

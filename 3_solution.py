@@ -1,12 +1,8 @@
 from functools import partial
 
 
-def gen_coords((dx,dy), max_x, max_y):
-  return map(lambda y: ((dx * y / dy) % max_x, y), range(0, max_y, dy))
-
-
-def trees_for_slope(grid, (dx,dy)):
-  return sum(1 for (x,y) in gen_coords((dx,dy), len(grid[0]), len(grid)) if grid[y][x] == '#')
+def trees_for_slope(g, (dx,dy)):
+  return sum(1 for (x,y) in map(lambda y: ((dx * y / dy) % len(g[0]), y), range(0, len(g), dy)) if g[y][x] == '#')
 
 
 def product(seq):

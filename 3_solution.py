@@ -2,7 +2,7 @@ from functools import partial
 
 
 def gen_coords((dx,dy), max_x, max_y):
-  return zip(map(lambda x: x % max_x, range(0, (max_y+1) * dx / dy, dx)), range(0, max_y, dy))
+  return map(lambda y: ((dx * y / dy) % max_x, y), range(0, max_y, dy))
 
 
 def trees_for_slope(grid, (dx,dy)):

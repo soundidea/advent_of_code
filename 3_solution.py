@@ -14,4 +14,4 @@ if __name__ == '__main__':
   with open('3_input.txt') as f:
     grid = [l.rstrip() for l in f.readlines()]
   print 'part 1: %d' % trees_for_slope(grid, (3,1))
-  print 'part 2: %d' % product(map(partial(trees_for_slope, grid), [(1,1), (3,1), (5,1), (7,1), (1,2)]))
+  print 'part 2: %d' % product(trees_for_slope(grid, s) for s in [(1,1), (3,1), (5,1), (7,1), (1,2)])

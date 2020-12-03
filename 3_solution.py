@@ -1,12 +1,12 @@
 from functools import partial
-from itertools import count
+
 
 def gen_coords((dx,dy), max_x, max_y):
   return zip(map(lambda x: x % max_x, range(0, max_y * dx / dy, dx)), range(0, max_y, dy))
 
 
 def trees_for_slope(grid, (x,y)):
-    return sum(1 for (x,y) in gen_coords((x,y), len(grid[0]), len(grid)) if grid[y][x] == '#')
+  return sum(1 for (x,y) in gen_coords((x,y), len(grid[0]), len(grid)) if grid[y][x] == '#')
 
 
 def product(seq):

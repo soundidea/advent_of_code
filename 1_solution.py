@@ -6,6 +6,7 @@ def list_that_sums_to(expenses, length, value):
   return next(c for c in combinations(expenses, length) if sum(c) == value)
 
 
+# In Python3 this isn't needed, just use math.prod().
 def product(values):
   return reduce(lambda a, b: a * b, values)
 

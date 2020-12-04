@@ -14,7 +14,7 @@ rules = {
   
 
 def valid_pt_2(p):
-  return 0 == sum(1 for key, (fmt, valid) in rules.items() if not (fmt.match(p[key]) and valid(p[key])))
+  return all(fmt.match(p[key]) and valid(p[key]) for key, (fmt, valid) in rules.items())
 
 
 if __name__ == '__main__':

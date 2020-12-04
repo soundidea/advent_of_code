@@ -1,6 +1,3 @@
-from functools import partial
-
-
 def trees_for_slope(g, (dx,dy)):
   return sum(1 for y in range(0, len(g), dy) if g[y][(dx * y / dy) % len(g[0])] == '#')
 

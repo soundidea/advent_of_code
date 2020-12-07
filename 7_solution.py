@@ -7,8 +7,7 @@ import re
 # Output: ('faded blue', {})
 def parse_bag(bag):
   name, contents = re.match(r'^(.*) bags contain (.*)$', bag).groups()
-  contents = filter(lambda c: c, [re.match(r'^(\d+) (.+) bags?.?$', c) for c in contents.split(', ')])
-  contents = dict((c.group(2), int(c.group(1))) for c in contents)
+  contents = dict((c[1], int(c[0])) for c in re.findall('(\d+) (.+?) bags?(?:,|\.)', contents))
   return (name, contents)
 
 

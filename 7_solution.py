@@ -1,6 +1,10 @@
 import re
 
 
+# Input: 'vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.'
+# Output: ('vibrant plum', {'faded blue': 5, 'dotted black': 6})
+# Input: 'faded blue bags contain no other bags.'
+# Output: ('faded blue', {})
 def parse_bag(bag):
   name, contents = re.match(r'^(.*) bags contain (.*)$', bag).groups()
   contents = filter(lambda c: c, [re.match(r'^(\d+) (.+) bags?.?$', c) for c in contents.split(', ')])

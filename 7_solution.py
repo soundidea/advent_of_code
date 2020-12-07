@@ -7,7 +7,8 @@ import re
 # Output: ('faded blue', {})
 def parse_bag(bag):
   name, contents = re.match(r'^(.*) bags contain (.*)$', bag).groups()
-  return (name, dict((c[1], int(c[0])) for c in re.findall('(\d+) (.+?) bags?(?:,|\.)', contents)))
+  return (name, dict((c[1], int(c[0])) for c in re.findall('(\d+) (.+?) bag', contents)))
+  #return (name, dict((c[1], int(c[0])) for c in re.findall('(\d+) (.+?) bags?(?:,|\.)', contents)))
 
 
 def recursive_parents(bags, bag_name):

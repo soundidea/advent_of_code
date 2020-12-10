@@ -1,6 +1,5 @@
 import re
 
-
 # dict of field name => (format RE, validation rule)
 rules = {
   'byr': (re.compile(r'^\d{4}$'), lambda val: 1920 <= int(val) <= 2002),
@@ -12,15 +11,11 @@ rules = {
   'pid': (re.compile(r'^\d{9}$'), lambda val: True)
 }
   
-
 def valid_pt_2(p):
   return all(fmt.match(p[key]) and valid(p[key]) for key, (fmt, valid) in rules.items())
 
-
-if __name__ == '__main__':
-  with open('4_input.txt') as f:
-    passports = [dict(re.findall(r'([a-z]{3}):(\S+)', passport)) for passport in f.read().split('\n\n')]
-
+with open('04_input.txt') as f:
+  passports = [dict(re.findall(r'([a-z]{3}):(\S+)', passport)) for passport in f.read().split('\n\n')]
   passports = [p for p in passports if set(rules.keys()).issubset(p.keys())]
-  print 'part 1: %d' % len(passports)
-  print 'part 2: %d' % sum(1 for p in passports if valid_pt_2(p))
+print 'part 1: %d' % len(passports)
+print 'part 2: %d' % sum(1 for p in passports if valid_pt_2(p))

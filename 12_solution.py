@@ -29,5 +29,5 @@ commands_pt2 = {
 with open('12_input.txt') as f:
   dirs = [re.match(r'^([A-Z])(\d+)', l).groups() for l in f]
 print 'part 1: %d' % sum(map(abs, reduce(lambda (p, d), (c, a): commands_pt1[c](p, d, int(a)), dirs, ((0,0), (1,0)))[0]))
-print 'part 2: %d' % sum(map(abs, reduce(lambda (p, d), (c, a): commands_pt2[c](p, d, int(a)), dirs, ((0,0), (10,1)))[0]))
+print 'part 2: %d' % sum(map(abs, reduce(lambda (p, w), (c, a): commands_pt2[c](p, w, int(a)), dirs, ((0,0), (10,1)))[0]))
 

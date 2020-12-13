@@ -1,0 +1,11 @@
+from itertools import count
+from operator import mul
+
+with open('13_input.txt') as f:
+  timestamp, buses = [l.strip() for l in f]
+  timestamp = int(timestamp)
+  buses = sorted([(int(bus), idx) for idx, bus in enumerate(buses.split(',')) if bus != 'x'], reverse=True)
+
+print 'part 1: %d' % reduce(mul, min((bus - (timestamp % bus), bus) for bus,_ in buses))
+print 'part 2: %d' % reduce(lambda (t, step), (bus, offs): next((c, step * bus) for c in count(t, step) if (c + offs) % bus == 0), buses, (0, 1))[0]
+

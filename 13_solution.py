@@ -9,3 +9,12 @@ with open('13_input.txt') as f:
 print 'part 1: %d' % reduce(mul, min((bus - (timestamp % bus), bus) for bus,_ in buses))
 print 'part 2: %d' % reduce(lambda (t, step), (bus, offs): next((c, step * bus) for c in count(t, step) if (c + offs) % bus == 0), buses, (0, 1))[0]
 
+
+# Slightly more readable version of part 2 (same algorithm):
+t, step = 0, 1
+for bus, offs in buses:
+  for c in count(t, step):
+    if (c + offs) % bus == 0:
+      t, step = c, step * bus
+      break
+print 'part 2: %d' % t

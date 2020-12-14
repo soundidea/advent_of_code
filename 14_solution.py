@@ -5,8 +5,7 @@ with open('14_input.txt') as f:
   program = [(re.match(r'(mem)\[(\d+)\] = (\d+)', l) or re.match(r'(mask) = ([01X]+)', l)).groups() for l in f]
   program = [(c[0], None, c[1]) if c[0] == 'mask' else (c[0], int(c[1]), int(c[2])) for c in program]
 
-masks = (0, 0, {})
-mem_pt1, mem_pt2 = {}, {}
+masks, mem_pt1, mem_pt2 = {}, {}, {}
 for instr, addr, arg in program:
   if instr == 'mask':
     masks = {d: reduce(lambda a, b: a * 2 + (1 if b == d else 0), arg, 0) for d in ('0', '1')}

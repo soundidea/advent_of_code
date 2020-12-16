@@ -1,5 +1,5 @@
 import re
-from itertools import chain
+from itertools import chain, ifilterfalse
 from operator import mul
 
 with open('16_input.txt') as f:
@@ -8,10 +8,10 @@ with open('16_input.txt') as f:
   my_ticket = list(map(int, re.findall(r'\d+', my_ticket)))
   nearby = list(map(int, re.findall(r'\d+', t)) for t in nearby.strip().split('\n'))[1:]
 
-all_ranges = list(chain.from_iterable(r for r in rules.values()))
+all_ranges = list(chain.from_iterable(rules.values()))
 valid_value = lambda v: any(r[0] <= v <= r[1] for r in all_ranges)
 
-print 'part 1: %d' % sum(filter(lambda v: not valid_value(v), chain.from_iterable(nearby)))
+print 'part 1: %d' % sum(ifilterfalse(valid_value, chain.from_iterable(nearby)))
 
 valid_nearby = filter(lambda t: all(valid_value(v) for v in t), nearby)
 field_candidates = {

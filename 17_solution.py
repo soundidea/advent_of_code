@@ -3,13 +3,13 @@ import numpy as np
 
 def neighbours(coord):
   dims = len(coord)
-  return [tuple(n) for n in np.add(coord, [d for d in product([-1,0,1], repeat=dims) if d != tuple([0]*dims)])]
+  return map(tuple, np.add(coord, [d for d in product([-1,0,1], repeat=dims) if d != tuple([0]*dims)]))
 
 def set_active(grid, coord):
   num_active_neighbours = sum(1 for n in neighbours(coord) if n in grid)
   is_currently_active = coord in grid
-  return ((is_currently_active and 2 <= num_active_neighbours <= 3)
-       or (not is_currently_active and num_active_neighbours == 3))
+  return (is_currently_active and 2 <= num_active_neighbours <= 3) \
+      or (not is_currently_active and num_active_neighbours == 3)
 
 def limits(grid):
   dims = len(next(iter(grid)))

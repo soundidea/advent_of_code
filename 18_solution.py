@@ -1,24 +1,11 @@
-import ast, string
+from string import maketrans
+import re
 
-inputs = open('18_input.txt').read()
+class I(int):
+  def __sub__(self, i): return I(int(self) * i)
+  def __mul__(self, i): return I(int(self) + i)
+  def __add__(self, i): return I(int(self) + i)
 
-def fixup(node, part):
-  if isinstance(node, ast.BinOp):
-    if isinstance(node.op, ast.Sub):
-      node.op = ast.Mult()
-    elif isinstance(node.op, ast.Mult):
-      node.op = ast.Add()
-    elif part==2 and isinstance(node.op, ast.Add):
-      node.op = ast.Mult()
-
-translations = {
-  1: ('*', '-'),
-  2: ('*+', '+*')
-}
-
-for part in (1,2):
-  module = ast.parse(inputs.translate(string.maketrans(*translations[part])))
-  for node in ast.walk(module):
-    fixup(node, part)
-  print 'part %d: %d' % (part, reduce(lambda a, expr: a + eval(compile(ast.Expression(expr.value), 'N/A', 'eval')), module.body, 0))
-
+inputs = re.sub(r'(\d+)', r'I(\1)', open('18_input.txt').read()).splitlines()
+print 'part 1:', sum(eval(expr.translate(maketrans('*', '-'))) for expr in inputs)
+print 'part 2:', sum(eval(expr.translate(maketrans('*+', '-*'))) for expr in inputs)

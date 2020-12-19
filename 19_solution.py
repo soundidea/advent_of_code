@@ -1,5 +1,3 @@
-from itertools import chain
-
 def parse_rule(rule_text):
   i, rule = rule_text.split(': ')
   return (i, [branch.split() for branch in rule.split(' | ')])

@@ -5,7 +5,7 @@ with open('21_input.txt') as f:
   foods = [l.split('(contains ') for l in f]
   foods = [(set(i.split()), a.rstrip(')\n').split(', ')) for i,a in foods]
 
-allergens = chain.from_iterable(a for (_,a) in foods)
+allergens = set(chain.from_iterable(a for (_,a) in foods))
 candidates = {allergen: reduce(set.intersection, [i for i,a in foods if allergen in a]) for allergen in allergens}
 allergens = {}
 while len(candidates):

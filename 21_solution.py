@@ -14,7 +14,6 @@ while len(candidates):
   allergens[a] = i
   candidates = {a2: i2.difference([i]) for a2, i2 in candidates.items()}
 
-bad_ingredients = set(allergens.values())
 print 'part 1:', sum(map(len, iter(i.difference(allergens.values()) for (i,_) in foods)))
 print 'part 2:', ','.join(allergens[a] for a in sorted(allergens.keys()))
 

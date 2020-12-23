@@ -2,7 +2,7 @@ def play_game(cups, turns):
   cur = cups[0]
   num_cups = len(cups)
   cups = dict(zip(cups, cups[1:] + cups[:1]))
-  for _ in range(1, turns + 1):
+  for _ in range(turns):
     to_move = [cups[cur], cups[cups[cur]], cups[cups[cups[cur]]]]
     dest = cur
     while dest == cur or dest in to_move:

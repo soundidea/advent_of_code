@@ -13,8 +13,8 @@ def play_game(cups, turns):
     cur = cups[cur]
   return cups
 
-cups = play_game([6,1,4,7,5,2,8,3,9], 100)
-print 'part 1:', ''.join(map(str, reduce(lambda c,_: c + [cups[c[-1]]], range(len(cups)-2), [cups[1]])))
-
-cups = play_game([6,1,4,7,5,2,8,3,9] + range(10,1000001), 10000000)
-print 'part 2:', cups[1] * cups[cups[1]]
+my_input = [6,1,4,7,5,2,8,3,9]
+cups_1 = play_game(my_input, 100)
+cups_2 = play_game(my_input + range(10,1000001), 10000000)
+print 'part 1:', ''.join(map(str, reduce(lambda c,_: c + [cups_1[c[-1]]], range(len(my_input)-2), [cups_1[1]])))
+print 'part 2:', cups_2[1] * cups_2[cups_2[1]]

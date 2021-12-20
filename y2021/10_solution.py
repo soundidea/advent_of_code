@@ -28,6 +28,6 @@ def illegal(line):
 
 lines = list(map(illegal, map(str.strip, open('10_input.txt').readlines())))
 print('part 1:', sum(filter(lambda c: type(c) == int, lines)))
-scores = sorted(reduce(lambda acc, c: c + acc * 5, stack, 0) for stack in 
+scores = sorted(reduce(lambda acc, c: c + acc * 5, stack) for stack in 
                        filter(lambda c: type(c) == list, lines))
 print('part 2:', scores[int(len(scores) / 2)])

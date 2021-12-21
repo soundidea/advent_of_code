@@ -2,6 +2,7 @@ from collections import Counter
 from functools import reduce
 
 template, rules = map(str.strip, open('14_input.txt').read().split('\n\n'))
+template = list(''.join(pair) for pair in zip(template[:-1], template[1:]))
 rules = {r[:2] : (''.join([r[0], r[6]]), ''.join([r[6], r[1]]))
          for r in rules.split('\n')}
 
@@ -19,7 +20,6 @@ def apply_steps(template, num_steps):
                 pair_counts.items(),
                 Counter(template[0][0]))
 
-template = list(''.join(pair) for pair in zip(template[:-1], template[1:]))
 counts = apply_steps(template, 10)
 print(max(counts.values()) - min(counts.values()))
 counts = apply_steps(template, 40)

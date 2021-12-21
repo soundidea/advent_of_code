@@ -10,15 +10,15 @@ def apply_steps(template, num_steps):
   '''Given a template as a list of letter pairs (e.g. ['NN', 'NC', 'CB'] for NNCB)
      Apply rule substitution `num_steps` times, and return the letter frequencies
      of the resulting polymer.'''
-  pair_counts = reduce(
-      lambda pc,_: reduce(Counter.__add__,
-                          [Counter({child: count for child in rules[pair]})
-                              for pair, count in pc.items()]),
-      range(num_steps),
-      Counter(template))
-  return reduce(lambda c, pc: c + Counter({pc[0][1]: pc[1]}),
-                pair_counts.items(),
-                Counter(template[0][0]))
+  pair_counts = Counter(template)
+  for _ in range(num_steps):
+    pair_counts = reduce(Counter.__add__,
+                         [Counter({child: count for child in rules[pair]})
+                             for pair, count in pair_counts.items()])
+  letter_frequencies = Counter(template[0][0])
+  for pair, count in pair_counts.items():
+    letter_frequencies += Counter({pair[1]: count})
+  return letter_frequencies
 
 counts = apply_steps(template, 10)
 print('part 1:', max(counts.values()) - min(counts.values()))

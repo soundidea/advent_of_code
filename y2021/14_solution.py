@@ -21,7 +21,7 @@ def apply_steps(template, num_steps):
                 Counter(template[0][0]))
 
 counts = apply_steps(template, 10)
-print(max(counts.values()) - min(counts.values()))
+print('part 1:', max(counts.values()) - min(counts.values()))
 counts = apply_steps(template, 40)
-print(max(counts.values()) - min(counts.values()))
+print('part 2:', max(counts.values()) - min(counts.values()))
 

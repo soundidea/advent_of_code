@@ -1,4 +1,4 @@
-from itertools import dropwhile, product
+from itertools import product
 from math import ceil, sqrt
 import re
 

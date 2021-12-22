@@ -1,7 +1,7 @@
 from functools import reduce
 import operator
 
-def parse_packet(bits, pos=0, depth=0):
+def parse_packet(bits, pos=0):
   result = {'version': int(bits[pos: pos + 3], 2),
             'type':    int(bits[pos + 3: pos + 6], 2)}
   pos += 6
@@ -21,7 +21,7 @@ def parse_packet(bits, pos=0, depth=0):
     result['subs'] = []
     while subs_remain > 0:
       old_pos = pos
-      sub, pos = parse_packet(bits, pos, depth+1)
+      sub, pos = parse_packet(bits, pos)
       result['subs'].append(sub)
       subs_remain -= 1 if len_type else (pos - old_pos)
   return result, pos

@@ -1,25 +1,35 @@
+from collections import defaultdict
+from heapq import *
+import math
+
 def neighbours(x,y,w,h):
-  return set((xn,yn) for xn in [x - 1, x, x + 1]
-                     for yn in [y - 1, y, y + 1]
-                     if (xn == x) ^ (yn == y) and
-                        0 <= xn < w and
-                        0 <= yn < h)
+  return [(xn,yn) for xn in [x - 1, x, x + 1]
+                  for yn in [y - 1, y, y + 1]
+                  if (xn == x) ^ (yn == y) and
+                     0 <= xn < w and
+                     0 <= yn < h]
 
 def cost_to_exit(cave):
-  w, h = len(cave[0]), len(cave)
-  costs = [[(w+h)*9 if x+y else 0 for x in range(w)] for y in range(h)]
-  to_visit = set((x,y) for x in range(w) for y in range(h) if x+y != 0)
-  while len(to_visit):
-    next_visit = set()
-    for x,y in to_visit:
-      neigh = neighbours(x,y,w,h)
-      cheapest_neighbour = min(costs[yn][xn] for xn,yn in neigh)
-      cost = cave[y][x] + cheapest_neighbour
-      if cost < costs[y][x]:
-        costs[y][x] = cost
-        next_visit |= neigh
-    to_visit = next_visit
-  return costs[h-1][w-1]
+  '''Perform an A-star search to find the cheapest cost through the cave.'''
+  w,h = len(cave[0]), len(cave)
+  start, goal = (0,0), (w-1,h-1)
+  open_set = []
+  heappush(open_set, (w+h, start))
+  costs = defaultdict(lambda:math.inf)
+  costs[start] = 0
+  reads, writes = 0, 1
+  while len(open_set):
+    reads += 1
+    _,pos = heappop(open_set)
+    if pos == goal:
+      return costs[pos]
+    p_cost = costs[pos]
+    for n in neighbours(*pos,w,h):
+      n_cost, cost = costs[n], p_cost + cave[n[1]][n[0]]
+      if cost < n_cost:
+        writes += 1
+        costs[n] = cost
+        heappush(open_set, (cost + w + h - sum(n), n))
 
 def generate_full_cave(cave):
   w, h = len(cave[0]), len(cave)

@@ -17,9 +17,7 @@ def cost_to_exit(cave):
   heappush(open_set, (w+h, start))
   costs = defaultdict(lambda:math.inf)
   costs[start] = 0
-  reads, writes = 0, 1
   while len(open_set):
-    reads += 1
     _,pos = heappop(open_set)
     if pos == goal:
       return costs[pos]
@@ -27,7 +25,6 @@ def cost_to_exit(cave):
     for n in neighbours(*pos,w,h):
       n_cost, cost = costs[n], p_cost + cave[n[1]][n[0]]
       if cost < n_cost:
-        writes += 1
         costs[n] = cost
         heappush(open_set, (cost + w + h - sum(n), n))
 

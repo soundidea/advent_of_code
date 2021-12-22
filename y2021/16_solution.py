@@ -42,7 +42,7 @@ def evaluate(packet):
          6: operator.lt,
          7: operator.eq}
   sub_values = list(map(evaluate, packet['subs']))
-  return reduce(ops[t], sub_values[1:], sub_values[1])
+  return reduce(ops[t], sub_values[1:], sub_values[0])
 
 hex_str = open('16_input.txt').read().strip()
 bit_str = ''.join('{0:04b}'.format(int(n, 16)) for n in hex_str)

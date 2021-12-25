@@ -1,8 +1,7 @@
-from itertools import chain,count
+from itertools import count
 
-i = [i.strip() for i in open('25_input.txt').readlines()]
+i = list(map(str.strip, open('25_input.txt').readlines()))
 w, h = len(i[0]), len(i)
-
 cucumbers = {(x,y): c for y,row in enumerate(i) for x,c in enumerate(row) if c != '.'}
 stages = [('>', lambda x,y: ((x+1)%w, y)),
           ('v', lambda x,y: (x, (y+1)%h))]

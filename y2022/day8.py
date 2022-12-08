@@ -1,6 +1,5 @@
 from itertools import takewhile
 from math import prod
-from functools import reduce
 
 def rays(x,y,w,h,grid):
   return (

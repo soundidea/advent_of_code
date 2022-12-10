@@ -2,7 +2,7 @@ use std::fs;
 use std::str::FromStr;
 
 fn main() {
-  let input = fs::read_to_string("day1_input.txt").unwrap();
+  let input = fs::read_to_string("day01_input.txt").unwrap();
   let mut elves: Vec<i32> =
       input.split("\n\n")
            .map(|elf| elf.trim()

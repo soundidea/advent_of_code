@@ -6,7 +6,7 @@ def priority(badge_set):
           if badge in string.ascii_uppercase
           else ord(badge) - ord('a') + 1)
 
-packs = list(map(str.strip, open("day3_input.txt").readlines()))
+packs = list(map(str.strip, open("day03_input.txt").readlines()))
 print('part 1:', sum(map(priority,
                          [set(p[:len(p)//2]) & set(p[len(p)//2:])
                           for p in packs])))

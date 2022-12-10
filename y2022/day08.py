@@ -17,7 +17,7 @@ def visibility(grid, coord, step):
   return (True, n)
 
 grid = {complex(x,y) : int(tree)
-        for y,row in enumerate(open('day8_input.txt').read().split('\n'))
+        for y,row in enumerate(open('day08_input.txt').read().split('\n'))
         for x,tree in enumerate(row)}
 trees = [[partial(visibility, grid, c)(step) for step in (-1, 1, -1j, 1j)] for c in grid]
 print('part 1:', sum(any(direction[0] for direction in tree) for tree in trees))

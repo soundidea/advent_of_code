@@ -14,7 +14,7 @@ def simulate(moves, n):
       visited.add(knots[-1])
   return len(visited)
 
-moves = open('day9_input.txt').read().strip().split('\n')
+moves = open('day09_input.txt').read().strip().split('\n')
 print('part 1:', simulate(moves, 2))
 print('part 2:', simulate(moves, 10))
 

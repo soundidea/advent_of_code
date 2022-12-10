@@ -1,5 +1,5 @@
 from collections import defaultdict
-log = map(str.strip, open('day7_input.txt').readlines()[1:])
+log = map(str.strip, open('day07_input.txt').readlines()[1:])
 dirs = defaultdict(int)
 cwd = []
 for l in log:

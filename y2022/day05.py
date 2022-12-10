@@ -7,7 +7,7 @@ def run_moves(stacks, moves, reverse=True):
     stacks[dst-1].extend(to_move[::-1] if reverse else to_move)
   return ''.join(s[-1] for s in stacks)
 
-stacks_in, moves_in = tuple(section.split('\n') for section in open('day5_input.txt').read().split('\n\n'))
+stacks_in, moves_in = tuple(section.split('\n') for section in open('day05_input.txt').read().split('\n\n'))
 
 stacks = [[] for _ in range(9)]
 for line in stacks_in[-2::-1]:

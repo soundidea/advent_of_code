@@ -31,10 +31,9 @@ def a_star(start, is_finished, heuristic, neighbours, edge_weight):
   '''
   g_score = defaultdict(lambda: math.inf)
   g_score[start] = 0
-  f_score = defaultdict(lambda: math.inf)
-  f_score[start] = heuristic(start)
+  f_score = heuristic(start)
   open_set = PriorityQueue()
-  open_set.put(PrioritizedItem(f_score[start], start))
+  open_set.put(PrioritizedItem(f_score, start))
   came_from = dict()
   while not open_set.empty():
     current = open_set.get().item
@@ -45,10 +44,10 @@ def a_star(start, is_finished, heuristic, neighbours, edge_weight):
       if new_g_score < g_score[neighbour]:
         came_from[neighbour] = current
         g_score[neighbour] = new_g_score
-        f_score[neighbour] = new_g_score + heuristic(neighbour)
+        f_score = new_g_score + heuristic(neighbour)
         # Technically here I should check if neighbour is already in
         # open_set, and replace it if so. If I ever have a question where
         # it's possible that no path exists, I'll have to fix this.
-        open_set.put(PrioritizedItem(f_score[neighbour], neighbour))
+        open_set.put(PrioritizedItem(f_score, neighbour))
   # Failure, no path was found.
   return []

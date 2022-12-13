@@ -11,11 +11,9 @@ def compare(left, right):
     cmp = compare(l, r)
     if cmp != 0:
       return cmp
-  if len(left) < len(right):
-    return -1
-  if len(right) < len(left):
-    return 1
-  return 0
+  return (-1 if len(left) < len(right)
+             else (1 if len(right) < len(left)
+                     else 0))
 
 packets = [eval(p)
            for p in open('day13_input.txt').read().split('\n')

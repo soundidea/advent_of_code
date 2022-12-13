@@ -2,12 +2,6 @@ from functools import cmp_to_key
 from math import prod
 
 def compare(left, right):
-  if left == [] and right == []:
-    return 0
-  if left == []:
-    return -1
-  if right == []:
-    return 1
   if type(left) != type(right):
     return compare([left] if type(left) != list else left,
                    [right] if type(right) != list else right)

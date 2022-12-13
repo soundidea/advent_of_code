@@ -45,9 +45,11 @@ def a_star(start, is_finished, heuristic, neighbours, edge_weight):
         came_from[neighbour] = current
         g_score[neighbour] = new_g_score
         f_score = new_g_score + heuristic(neighbour)
-        # Technically here I should check if neighbour is already in
-        # open_set, and replace it if so. If I ever have a question where
-        # it's possible that no path exists, I'll have to fix this.
+        # If neighbour is already in open_set then delete it before re-adding
+        # with the new f_score. This only works because PriorityQueue is a list
+        # under the hood.
+        open_set.queue = list(filter(lambda x: x.item != neighbour,
+                                     open_set.queue))
         open_set.put(PrioritizedItem(f_score, neighbour))
   # Failure, no path was found.
   return []

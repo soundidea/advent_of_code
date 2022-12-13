@@ -26,5 +26,6 @@ print('part 1:', sum(idx+1
 
 dividers = [[[2]],[[6]]]
 sorted_packets = sorted(packets + dividers, key=cmp_to_key(compare))
-print('part 2:', prod(filter(lambda idx: sorted_packets[idx-1] in dividers,
-                             range(1, 1 + len(sorted_packets)))))
+print('part 2:', prod(map(lambda p: p[0]+1,
+                          filter(lambda p: p[1] in dividers,
+                                 enumerate(sorted_packets)))))

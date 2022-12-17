@@ -17,8 +17,6 @@ def merge(intervals):
     else:
       stack.append(list(i))
   return stack
-# Remove any empty intervals, return the rest.
-#  return [tuple(i) for i in stack if i[0] != i[1]]
 
 def intersect(a, b):
   '''Returns the intersection of the two intervals.
@@ -46,14 +44,13 @@ sensors = [(p[0], p[1], manhattan(p[0], p[1], p[2], p[3])) for p in parsed]
 beacons = set((p[2], p[3]) for p in parsed)
 
 row = 2000000
-print('part 1:', sum(i[1] - i[0]
-                     for i in merge(sensor_intervals(sensors, row))) -
+print('part 1:', sum(i[1] - i[0] for i in merge(sensor_intervals(sensors, row))) -
                  sum(b[1] == row for b in beacons))
 
 # I've seen some really clever solutions that walk around the edges of the
 # sensor diamonds and figure out the only possible position of the beacon that
 # way, but I'm not smart enough to figure it out for myself, and this runs
-# quickly enough .
+# quickly enough, 17 seconds on my laptop.
 space_size = 4000001
 restrict = (0, space_size)
 for y in range(space_size):

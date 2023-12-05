@@ -26,7 +26,7 @@ def first_digit(line, reverse=False, words=False):
   if words:
     trie = reverse_word_trie if reverse else word_trie
     t = trie
-  for c in (line[-2::-1] if reverse else line[:-1]):
+  for c in (line[::-1] if reverse else line):
     if c.isdigit():
       return int(c)
     if words:

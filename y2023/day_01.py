@@ -1,5 +1,3 @@
-from itertools import islice
-
 word_trie = {
   'o': {'n': {'e': 1}},
   't': {'w': {'o': 2},

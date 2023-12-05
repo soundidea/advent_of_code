@@ -1,3 +1,4 @@
+from itertools import islice
 
 word_trie = {
   'o': {'n': {'e': 1}},
@@ -11,21 +12,29 @@ word_trie = {
   'n': {'i': {'n': {'e': 9}}}
 }
  
+reverse_word_trie = {
+  'e': {'n': {'o': 1,
+              'i': {'n': 9}},
+        'e': {'r': {'h': {'t': 3}}},
+        'v': {'i': {'f': 5}}},
+  'o': {'w': {'t': 2}},
+  'r': {'u': {'o': {'f': 4}}},
+  'x': {'i': {'s': 6}},
+  'n': {'e': {'v': {'e': {'s': 7}}}},
+  't': {'h': {'g': {'i': {'e': 8}}}}
+}
+
 def first_digit(line, reverse=False, words=False):
-  line_len = len(line)
-  for i in range(len(line)-2, -1, -1) if reverse else range(len(line)):
-    if line[i].isdigit():
-      return int(line[i])
-    if words and i+3 < line_len:
-      i2 = i
-      t = word_trie.get(line[i2])
-      while t:
-        if type(t) == int:
-          return t
-        i2 += 1
-        if i2 >= line_len:
-          break
-        t = t.get(line[i2])
+  if words:
+    trie = reverse_word_trie if reverse else word_trie
+    t = trie
+  for c in (line[-2::-1] if reverse else line[:-1]):
+    if c.isdigit():
+      return int(c)
+    if words:
+      t = t.get(c, trie)
+      if type(t) == int:
+        return t
   raise ValueError('no digits found in %s' % line)
 
 doc = open('day_01_input.txt').readlines()

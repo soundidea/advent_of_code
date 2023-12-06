@@ -11,7 +11,7 @@ test_data = parse_data('day_06_test_input.txt')
 
 def quadratic_roots(a, b, c):
   det = math.sqrt(b**2 - (4 * a * c))
-  if det <= 0:
+  if det < 0:
     return []
   elif det == 0:
     return [-b / (2 * a)]

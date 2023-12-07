@@ -24,14 +24,12 @@ for filename in filenames:
   print(f'Static init: {elapsed:.3f} ms')
 
   start_time = time.perf_counter()
-  module.part1(test=True)
   module.part1()
   elapsed = (time.perf_counter() - start_time) * 1000
   overall_runtime += elapsed
   print(f'Part 1: {elapsed:.3f} ms')
 
   start_time = time.perf_counter()
-  module.part2(test=True)
   module.part2()
   elapsed = (time.perf_counter() - start_time) * 1000
   overall_runtime += elapsed

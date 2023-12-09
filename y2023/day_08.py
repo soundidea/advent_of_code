@@ -1,41 +1,44 @@
 from functools import reduce
+from itertools import cycle
 from math import lcm
 from time import perf_counter
+
+def value(node):
+  return ord(node[0])*128*128 + ord(node[1])*128 + ord(node[2])
 
 def parse_data(filename):
   lines = open(filename).readlines()
   directions = [0 if c == 'L' else 1 for c in lines[0][:-1]]
-  nodes = {l[:3] : (l[7:10], l[12:15]) for l in lines[2:]}
-
-  # last_visited = for each node, maps to the node you reach if you follow the directions once.
-  last_visited = {node: reduce(lambda n,d: nodes[n][d], directions, node) for node in nodes}
-  return last_visited, len(directions)
+  nodes = {value(l[:3]) : (value(l[7:10]), value(l[12:15])) for l in lines[2:]}
+  return directions, nodes
 
 st = perf_counter()
 data = parse_data('day_08_input.txt')
 parse_time = 1000 * (perf_counter() - st)
 
+cached_traversals = {}
+
+def traverse(start, nodes, directions, test):
+  if start in cached_traversals:
+    return cached_traversals[start]
+  n, end = start, ord('Z')
+  for num_steps, direction in enumerate(cycle(directions)):
+    n = nodes[n][direction]
+    if n%128 == end:
+      if not test:
+        cached_traversals[start] = num_steps + 1
+      return num_steps + 1
+
 def part1(test=False):
-  last_visited, num_directions = parse_data('day_08_test_input.txt') if test else data
-  # 'ZZZ' is only ever reached after len(directions) steps from other nodes
-  # given node, which is super convenient.
-  node, num_steps = 'AAA', 0
-  while node != 'ZZZ':
-    node, num_steps = last_visited[node], num_steps + 1
-  return num_steps * num_directions
+  directions, nodes = parse_data('day_08_test_input.txt') if test else data
+  return traverse(value('AAA'), nodes, directions, test)
 
 def part2(test=False):
-  last_visited, num_directions = parse_data('day_08_test_input_2.txt') if test else data
-  start_nodes = [n for n in last_visited if n[2] == 'A']
-  result = 1
-  for node in start_nodes:
-    # 'xxZ' always happens to be at the end of a repeating cycle that is
-    # exactly N * len(directions) long. How useful...
-    num_steps = 0
-    while node[2] != 'Z':
-      node, num_steps = last_visited[node], num_steps + 1
-    result = lcm(result, num_steps * num_directions)
-  return result
+  directions, nodes = parse_data('day_08_test_input_2.txt') if test else data
+  start_nodes = [n for n in nodes if n%128 == ord('A')]
+  return reduce(lambda result, n: lcm(result,
+                                      traverse(n, nodes, directions, test)), 
+                start_nodes, 1)
 
 if __name__ == '__main__':
   p1_test = part1(test=True)

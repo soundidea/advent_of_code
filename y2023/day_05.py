@@ -1,5 +1,9 @@
 from itertools import repeat
-from time import perf_counter
+
+data_files = [
+  'day_05_input.txt',
+  'day_05_test_input.txt'
+]
 
 def parse_data(filename):
   f = open(filename).read().strip().split('\n\n')
@@ -14,11 +18,6 @@ def parse_data(filename):
         m.insert(i, (pos, rng[0] - pos, pos))
       pos += m[i][1]
   return (seeds, span_maps)
-
-st = perf_counter()
-data = parse_data('day_05_input.txt')
-parse_time = 1000 * (perf_counter() - st)
-test_data = parse_data('day_05_test_input.txt')
 
 def map_range(seed_rng, span_map):
   result = []
@@ -43,27 +42,23 @@ def do_run(seed_ranges, maps):
     seed_ranges = new_ranges
   return min(seed_ranges)[0]
 
-def part1(test=False):
-  seeds, maps = test_data if test else data
+def part1(data):
+  seeds, maps = data
   # Do the run with ranges [(seeds[0], 1), (seeds[1], 1), ...]
   return do_run(zip(seeds, repeat(1)), maps)
 
-def part2(test=False):
-  seeds, maps = test_data if test else data
+def part2(data):
+  seeds, maps = data
   # Do the run with ranges [(seeds[0], seeds[1]), (seeds[2], seeds[3]), ...]
   return do_run(zip(seeds[:-1:2], seeds[1::2]), maps)
 
 if __name__ == '__main__':
-  p1_test = part1(test=True)
-  p2_test = part2(test=True)
-  st = perf_counter()
-  p1 = part1()
-  p1_time = 1000 * (perf_counter() - st)
-  st = perf_counter()
-  p2 = part2()
-  p2_time = 1000 * (perf_counter() - st)
-  print('Data parse:', f'{parse_time:.4} ms')
+  data = [parse_data(f) for f in data_files]
+  p1_test = part1(data[1])
+  p2_test = part2(data[-1])
+  p1 = part1(data[0])
+  p2 = part2(data[0])
   print('Part 1 test:', p1_test, '(passed)' if p1_test == 35 else '(failed)')
   print('Part 2 test:', p2_test, '(passed)' if p2_test == 46 else '(failed)')
-  print('Part 1:', p1, f'({p1_time:.4} ms)')
-  print('Part 2:', p2, f'({p2_time:.4} ms)')
+  print('Part 1:', p1)
+  print('Part 2:', p2)

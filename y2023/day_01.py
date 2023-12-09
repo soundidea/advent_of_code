@@ -1,3 +1,5 @@
+from time import perf_counter
+
 word_trie = {
   'o': {'n': {'e': 1}},
   't': {'w': {'o': 2},
@@ -35,26 +37,33 @@ def first_digit(line, reverse=False, words=False):
         return t
   raise ValueError('no digits found in %s' % line)
 
-doc = open('day_01_input.txt').readlines()
-part1_test_doc = open('day_01_test_input.txt').readlines()
-part2_test_doc = open('day_01_test_input_2.txt').readlines()
+st = perf_counter()
+data = open('day_01_input.txt').readlines()
+parse_time = 1000 * (perf_counter() - st)
 
 def part1(test=False):
-  data = part1_test_doc if test else doc
+  doc = open('day_01_test_input.txt').readlines() if test else data
   return sum(10 * first_digit(l) +
              first_digit(l, reverse=True)
-             for l in data)
+             for l in doc)
 
 def part2(test=False):
-  data = part2_test_doc if test else doc
+  doc = open('day_01_test_input_2.txt').readlines() if test else data
   return sum(10 * first_digit(l, words=True) +
              first_digit(l, reverse=True, words=True)
-             for l in data)
+             for l in doc)
 
 if __name__ == '__main__':
   p1_test = part1(test=True)
   p2_test = part2(test=True)
+  st = perf_counter()
+  p1 = part1()
+  p1_time = 1000 * (perf_counter() - st)
+  st = perf_counter()
+  p2 = part2()
+  p2_time = 1000 * (perf_counter() - st)
+  print('Data parse:', f'{parse_time:.4} ms')
   print('Part 1 test:', p1_test, '(passed)' if p1_test == 142 else '(failed)')
   print('Part 2 test:', p2_test, '(passed)' if p2_test == 281 else '(failed)')
-  print('Part 1:', part1())
-  print('Part 2:', part2())
+  print('Part 1:', p1, f'({p1_time:.4} ms)')
+  print('Part 2:', p2, f'({p2_time:.4} ms)')

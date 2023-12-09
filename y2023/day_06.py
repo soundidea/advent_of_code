@@ -1,4 +1,5 @@
 import math
+from time import perf_counter
 
 def parse_data(filename):
   lines = open(filename).readlines()
@@ -6,7 +7,9 @@ def parse_data(filename):
   distances = list(map(int, lines[1].split(':')[1].split()))
   return (times, distances)
 
+st = perf_counter()
 data = parse_data('day_06_input.txt')
+parse_time = 1000 * (perf_counter() - st)
 test_data = parse_data('day_06_test_input.txt')
 
 def quadratic_roots(a, b, c):
@@ -36,7 +39,14 @@ def part2(test=False):
 if __name__ == '__main__':
   p1_test = part1(test=True)
   p2_test = part2(test=True)
+  st = perf_counter()
+  p1 = part1()
+  p1_time = 1000 * (perf_counter() - st)
+  st = perf_counter()
+  p2 = part2()
+  p2_time = 1000 * (perf_counter() - st)
+  print('Data parse:', f'{parse_time:.4} ms')
   print('Part 1 test:', p1_test, '(passed)' if p1_test == 288 else '(failed)')
   print('Part 2 test:', p2_test, '(passed)' if p2_test == 71503 else '(failed)')
-  print('Part 1:', part1())
-  print('Part 2:', part2())
+  print('Part 1:', p1, f'({p1_time:.4} ms)')
+  print('Part 2:', p2, f'({p2_time:.4} ms)')

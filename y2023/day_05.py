@@ -1,4 +1,5 @@
 from itertools import repeat
+from time import perf_counter
 
 def parse_data(filename):
   f = open(filename).read().strip().split('\n\n')
@@ -14,7 +15,9 @@ def parse_data(filename):
       pos += m[i][1]
   return (seeds, span_maps)
 
+st = perf_counter()
 data = parse_data('day_05_input.txt')
+parse_time = 1000 * (perf_counter() - st)
 test_data = parse_data('day_05_test_input.txt')
 
 def map_range(seed_rng, span_map):
@@ -53,7 +56,14 @@ def part2(test=False):
 if __name__ == '__main__':
   p1_test = part1(test=True)
   p2_test = part2(test=True)
+  st = perf_counter()
+  p1 = part1()
+  p1_time = 1000 * (perf_counter() - st)
+  st = perf_counter()
+  p2 = part2()
+  p2_time = 1000 * (perf_counter() - st)
+  print('Data parse:', f'{parse_time:.4} ms')
   print('Part 1 test:', p1_test, '(passed)' if p1_test == 35 else '(failed)')
   print('Part 2 test:', p2_test, '(passed)' if p2_test == 46 else '(failed)')
-  print('Part 1:', part1())
-  print('Part 2:', part2())
+  print('Part 1:', p1, f'({p1_time:.4} ms)')
+  print('Part 2:', p2, f'({p2_time:.4} ms)')

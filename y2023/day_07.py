@@ -1,4 +1,5 @@
 from collections import Counter
+from time import perf_counter
 
 def parse_data(filename):
   # "KK677 28" becomes: ([13,13,6,7,7], 28)
@@ -6,7 +7,9 @@ def parse_data(filename):
   data = [(list(hand), int(bid)) for hand, bid in map(str.split, open(filename).readlines())]
   return [([int(h) if h.isdigit() else letter_card_ranks[h] for h in hand], bid) for hand,bid in data]
 
+st = perf_counter()
 data = parse_data('day_07_input.txt')
+parse_time = 1000 * (perf_counter() - st)
 test_data = parse_data('day_07_test_input.txt')
 
 def rank(hand):
@@ -65,7 +68,14 @@ def part2(test=False):
 if __name__ == '__main__':
   p1_test = part1(test=True)
   p2_test = part2(test=True)
+  st = perf_counter()
+  p1 = part1()
+  p1_time = 1000 * (perf_counter() - st)
+  st = perf_counter()
+  p2 = part2()
+  p2_time = 1000 * (perf_counter() - st)
+  print('Data parse:', f'{parse_time:.4} ms')
   print('Part 1 test:', p1_test, '(passed)' if p1_test == 6440 else '(failed)')
   print('Part 2 test:', p2_test, '(passed)' if p2_test == 5905 else '(failed)')
-  print('Part 1:', part1())
-  print('Part 2:', part2())
+  print('Part 1:', p1, f'({p1_time:.4} ms)')
+  print('Part 2:', p2, f'({p2_time:.4} ms)')

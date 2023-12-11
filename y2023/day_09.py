@@ -1,7 +1,6 @@
 from functools import reduce
 
 data_files = [
-  # Add a 3rd entry if part 2 needs different test data.
   'day_09_input.txt',
   'day_09_test_input.txt'
 ]
